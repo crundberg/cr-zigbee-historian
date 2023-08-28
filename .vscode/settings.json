@@ -1,0 +1,18 @@
+{
+	"editor.formatOnSave": false,
+	// Turn it off format on save for JS and JSX, we will do this via eslint
+	"[javascript]": {
+		"editor.formatOnSave": false,
+	},
+	// ESLint
+	"eslint.validate": [
+		"javascript"
+	],
+	// Tell the ESLint plugin to run on save
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"cSpell.words": [
+		"Conbee"
+	],
+}

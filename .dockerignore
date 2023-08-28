@@ -1,0 +1,15 @@
+.DS_Store
+.env
+.eslintrc.json
+.git
+.logs
+.mocharc.json
+.nyc_output
+.nycrc
+.prettierrc
+.vscode
+autostart
+coverage
+node_modules/
+*.log
+*.md

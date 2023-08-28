@@ -1,0 +1,27 @@
+{
+  "name": "cr-zigbee-historian",
+  "version": "0.0.1",
+  "description": "Collects data from ZigBee into InfluxDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "crundberg",
+  "license": "ISC",
+  "dependencies": {
+    "@influxdata/influxdb-client": "^1.33.2",
+    "axios": "^1.4.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.48.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-jsdoc": "^46.5.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.2",
+    "prettier-eslint": "^15.0.1"
+  }
+}
