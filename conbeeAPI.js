@@ -1,9 +1,9 @@
 const axios = require('axios').default;
 
 const ConbeeAPI = ({ config }) => {
-	const { auth } = config;
+	const { auth, host } = config;
 	const instance = axios.create({
-		baseURL: `http://zigbee.kube.crundberg.se/api/${auth}`,
+		baseURL: `http://${host}/api/${auth}`,
 	});
 
 	const getAllLights = async () => {
