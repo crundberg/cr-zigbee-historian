@@ -6,12 +6,12 @@ const httpsAgent = new https.Agent({
 });
 
 const HueAPI = ({ config }) => {
-	const { auth, host } = config;
+	const { host, token } = config;
 	const instance = axios.create({
 		baseURL: `https://${host}/clip/v2/resource`,
 		httpsAgent,
 		headers: {
-			'hue-application-key': auth,
+			'hue-application-key': token,
 		},
 	});
 

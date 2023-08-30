@@ -147,15 +147,12 @@ const Conbee = ({ conbeeAPI, influx }) => {
 
 		lights.forEach((item) => {
 			const point = new Point('light')
+				.tag('device', 'conbee')
 				.tag('deviceId', item.id)
-				.tag('name', item.name)
+				.tag('deviceName', item.name)
 				.booleanField('on', item.on);
 			influx.writePoint(point);
 			console.log(point);
-		});
-
-		influx.flush().catch((err) => {
-			console.error('Error flush light', err);
 		});
 	};
 	const writeSensors = async () => {
@@ -170,8 +167,9 @@ const Conbee = ({ conbeeAPI, influx }) => {
 
 		sensors.forEach((item) => {
 			const point = new Point(item.point)
+				.tag('device', 'conbee')
 				.tag('deviceId', item.id)
-				.tag('name', item.name);
+				.tag('deviceName', item.name);
 
 			if (item.dataType === 'int') {
 				point.intField('value', item.value);
@@ -183,10 +181,6 @@ const Conbee = ({ conbeeAPI, influx }) => {
 
 			influx.writePoint(point);
 			console.log(point);
-		});
-
-		influx.flush().catch((err) => {
-			console.error('Error flush sensor', err);
 		});
 	};
 

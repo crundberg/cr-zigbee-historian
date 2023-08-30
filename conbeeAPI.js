@@ -1,9 +1,9 @@
 const axios = require('axios').default;
 
 const ConbeeAPI = ({ config }) => {
-	const { auth, host } = config;
+	const { host, token } = config;
 	const instance = axios.create({
-		baseURL: `http://${host}/api/${auth}`,
+		baseURL: `http://${host}/api/${token}`,
 	});
 
 	const getAllLights = async () => {
