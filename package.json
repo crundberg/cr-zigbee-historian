@@ -4,14 +4,17 @@
   "description": "Collects data from ZigBee into InfluxDB",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "docker buildx build --platform linux/amd64,linux/arm64 --builder mybuilder --push -t registry.kube.crundberg.se/cr-zigbee-historian ."
   },
   "author": "crundberg",
   "license": "ISC",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.33.2",
     "axios": "^1.4.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "eslint": "^8.48.0",

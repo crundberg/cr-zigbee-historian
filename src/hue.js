@@ -1,6 +1,6 @@
 const { Point } = require('@influxdata/influxdb-client');
 
-const Hue = ({ hueAPI, influx }) => {
+const Hue = ({ hueAPI, logger, influx }) => {
 	const getLights = async () => {
 		const lights = await hueAPI.getAllLights();
 
@@ -85,7 +85,7 @@ const Hue = ({ hueAPI, influx }) => {
 		try {
 			lights = await getLights();
 		} catch (err) {
-			console.error('Error getting lights', err);
+			logger.error('Error getting lights', err);
 			return;
 		}
 
@@ -95,8 +95,9 @@ const Hue = ({ hueAPI, influx }) => {
 				.tag('deviceId', item.id)
 				.tag('deviceName', item.name)
 				.booleanField('on', item.on);
+
 			influx.writePoint(point);
-			console.log(point);
+			logger.debug(point);
 		});
 	};
 
@@ -106,7 +107,7 @@ const Hue = ({ hueAPI, influx }) => {
 		try {
 			sensor = await getLightLevel();
 		} catch (err) {
-			console.error('Error getting light level', err);
+			logger.error('Error getting light level', err);
 			return;
 		}
 
@@ -115,8 +116,9 @@ const Hue = ({ hueAPI, influx }) => {
 				.tag('device', 'hue')
 				.tag('deviceId', item.id)
 				.intField('value', item.value);
+
 			influx.writePoint(point);
-			console.log(point);
+			logger.debug(point);
 		});
 	};
 
@@ -126,7 +128,7 @@ const Hue = ({ hueAPI, influx }) => {
 		try {
 			sensor = await getMotion();
 		} catch (err) {
-			console.error('Error getting motion', err);
+			logger.error('Error getting motion', err);
 			return;
 		}
 
@@ -135,8 +137,9 @@ const Hue = ({ hueAPI, influx }) => {
 				.tag('device', 'hue')
 				.tag('deviceId', item.id)
 				.booleanField('value', item.value);
+
 			influx.writePoint(point);
-			console.log(point);
+			logger.debug(point);
 		});
 	};
 
@@ -146,7 +149,7 @@ const Hue = ({ hueAPI, influx }) => {
 		try {
 			sensor = await getTemperature();
 		} catch (err) {
-			console.error('Error getting temperature', err);
+			logger.error('Error getting temperature', err);
 			return;
 		}
 
@@ -155,8 +158,9 @@ const Hue = ({ hueAPI, influx }) => {
 				.tag('device', 'hue')
 				.tag('deviceId', item.id)
 				.floatField('value', item.value);
+
 			influx.writePoint(point);
-			console.log(point);
+			logger.debug(point);
 		});
 	};
 

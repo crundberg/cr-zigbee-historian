@@ -1,5 +1,6 @@
 const { InfluxDB } = require('@influxdata/influxdb-client');
 const config = require('./config');
+const logger = require('./logger');
 const ConbeeAPI = require('./conbeeAPI');
 const Conbee = require('./conbee');
 const HueAPI = require('./hueAPI');
@@ -14,13 +15,13 @@ const conbeeAPI = ConbeeAPI({
 	config: config.conbee,
 });
 
-const conbee = Conbee({ conbeeAPI, influx });
+const conbee = Conbee({ conbeeAPI, logger, influx });
 
 const hueAPI = HueAPI({
 	config: config.hue,
 });
 
-const hue = Hue({ hueAPI, influx });
+const hue = Hue({ hueAPI, logger, influx });
 
 const init = async () => {
 	await conbee.writeLight();
@@ -30,10 +31,15 @@ const init = async () => {
 	await hue.writeMotion();
 	await hue.writeTemperature();
 
-	influx.flush().catch((err) => {
-		console.error('Error flush light', err);
-	});
+	influx
+		.flush()
+		.then(() => {
+			logger.info('Data flushed');
+		})
+		.catch((err) => {
+			logger.error('Error flushing', err);
+		});
 };
 
 init();
-setInterval(init, 60 * 1000);
+setInterval(init, config.general.updateInterval * 1000);

@@ -1,6 +1,6 @@
 const { Point } = require('@influxdata/influxdb-client');
 
-const Conbee = ({ conbeeAPI, influx }) => {
+const Conbee = ({ conbeeAPI, logger, influx }) => {
 	const supportedSensors = [
 		'ZLLTemperature',
 		'ZLLLightLevel',
@@ -141,7 +141,7 @@ const Conbee = ({ conbeeAPI, influx }) => {
 		try {
 			lights = await getLights();
 		} catch (err) {
-			console.error('Error getting lights', err);
+			logger.error('Error getting lights', err);
 			return;
 		}
 
@@ -151,8 +151,9 @@ const Conbee = ({ conbeeAPI, influx }) => {
 				.tag('deviceId', item.id)
 				.tag('deviceName', item.name)
 				.booleanField('on', item.on);
+
 			influx.writePoint(point);
-			console.log(point);
+			logger.debug(point);
 		});
 	};
 	const writeSensors = async () => {
@@ -161,7 +162,7 @@ const Conbee = ({ conbeeAPI, influx }) => {
 		try {
 			sensors = await getSensors();
 		} catch (err) {
-			console.error('Error getting sensors', err);
+			logger.error('Error getting sensors', err);
 			return;
 		}
 
@@ -180,7 +181,7 @@ const Conbee = ({ conbeeAPI, influx }) => {
 			}
 
 			influx.writePoint(point);
-			console.log(point);
+			logger.debug(point);
 		});
 	};
 
